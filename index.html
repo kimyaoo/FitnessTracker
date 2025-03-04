@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Fitness Tracker</h1>
+    </header>
+
+    <section class="tracker">
+        <h2>Track Your Progress</h2>
+        <form id="activity-form">
+            <label for="exercise">Exercise:</label>
+            <input type="text" id="exercise" placeholder="e.g., Running" required>
+            
+            <label for="duration">Duration (minutes):</label>
+            <input type="number" id="duration" placeholder="e.g., 30" required>
+            
+            <button type="submit">Add Activity</button>
+        </form>
+
+        <a href="history.html" class="history-btn">View Activity History</a>
+    </section>
+
+    <script>
+        document.getElementById('activity-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get values
+            const exercise = document.getElementById('exercise').value;
+            const duration = document.getElementById('duration').value;
+
+            // Create activity object
+            const activity = {
+                exercise,
+                duration,
+                date: new Date().toLocaleDateString()
+            };
+
+            // Get existing activities from localStorage or create an empty array
+            const activities = JSON.parse(localStorage.getItem('activities')) || [];
+
+            // Add new activity
+            activities.push(activity);
+
+            // Save back to localStorage
+            localStorage.setItem('activities', JSON.stringify(activities));
+
+            // Clear form
+            document.getElementById('activity-form').reset();
+
+            alert('Activity added!');
+        });
+    </script>
+</body>
+</html>
+
+
+<a href="diet.html" class="diet-btn">Track Your Diet</a>
+
+<a href="calendar.html" class="calendar-btn">View Calendar</a>

@@ -1,0 +1,274 @@
+/* General styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Header */
+header {
+    background-color: #ffd1df;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+/* Section styling */
+.tracker {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* Form styling */
+form {
+    display: grid;
+    gap: 10px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #ffd1df;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ffd1df;
+}
+
+/* Activity List Page */
+#activity-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#activity-list li {
+    background: #eee;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* History page styling */
+.history, .tracker {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.history-btn, .back-btn {
+    display: inline-block;
+    background-color: #ffd1df;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.history-btn:hover, .back-btn:hover {
+    background-color: #ffd1df;
+}
+
+#activity-history {
+    list-style-type: none;
+    padding: 0;
+}
+
+#activity-history li {
+    background: #eee;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#activity-history li {
+    background: #f4f4f4;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.1em;
+}
+
+/*Diet Tracking Page */
+.diet-tracker {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+#meal-history {
+    list-style: none;
+    padding: 0;
+}
+
+#meal-history li {
+    background: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.diet-btn {
+    display: inline-block;
+    background-color: #fc8eac;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.diet-btn:hover {
+    background-color: #fc8eac;
+}
+
+h3 {
+    font-size: 1.5em;
+    margin-top: 20px;
+}
+
+#total-calories {
+    font-weight: bold;
+    color: #fc8eac; 
+}
+
+
+/* Calendar */
+.calendar {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.calendar-day {
+    background: #f4f4f4;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-day h3 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.calendar-day ul {
+    list-style: none;
+    padding: 0;
+}
+
+.calendar-day li {
+    background: white;
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.calendar-btn {
+    display: inline-block;
+    background-color: #fc8eac; /* Green for a healthy feel */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.calendar-btn:hover {
+    background-color: #fc8eac;
+}
+
+/* Calendar Grid */
+#calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.calendar-day {
+    background: #f4f4f4;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.calendar-day:hover {
+    background: #ddd;
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background: white;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#clear-day {
+    background: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#clear-day:hover {
+    background: darkred;
+}

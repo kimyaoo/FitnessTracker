@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity History</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Activity History</h1>
+    </header>
+
+    <section class="history">
+        <h2>Your Logged Activities</h2>
+        <ul id="activity-history"></ul>
+        <a href="index.html" class="back-btn">Back to Tracker</a>
+    </section>
+
+    <script>
+        // Get activities from localStorage
+        const activities = JSON.parse(localStorage.getItem('activities')) || [];
+
+        // Reference to the activity list
+        const activityList = document.getElementById('activity-history');
+
+        // Display activities
+        if (activities.length > 0) {
+            activities.forEach(activity => {
+                const li = document.createElement('li');
+                li.textContent = `${activity.exercise} - ${activity.duration} minutes on ${activity.date}`;
+                activityList.appendChild(li);
+            });
+        } else {
+            activityList.innerHTML = '<li>No activities logged yet.</li>';
+        }
+    </script>
+</body>
+</html>

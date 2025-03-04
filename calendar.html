@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Calendar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Fitness Calendar</h1>
+    </header>
+
+    <section class="calendar">
+        <h2>Workout & Diet Summary</h2>
+        <div id="calendar-grid"></div>
+        <a href="index.html" class="back-btn">Back to Tracker</a>
+    </section>
+
+    <!-- Modal for Viewing & Editing Entries -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-date"></h2>
+            <h3>Workouts</h3>
+            <ul id="modal-workouts"></ul>
+            <h3>Calories</h3>
+            <p id="modal-calories"></p>
+            <button id="clear-day">Clear All Data for This Day</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const calendarGrid = document.getElementById('calendar-grid');
+            const modal = document.getElementById('modal');
+            const modalDate = document.getElementById('modal-date');
+            const modalWorkouts = document.getElementById('modal-workouts');
+            const modalCalories = document.getElementById('modal-calories');
+            const closeModal = document.querySelector('.close');
+            const clearDayBtn = document.getElementById('clear-day');
+
+            const activities = JSON.parse(localStorage.getItem('activities')) || [];
+            const meals = JSON.parse(localStorage.getItem('meals')) || [];
+            const dataByDate = {};
+
+            // Organize activities and meals by date
+            activities.forEach(activity => {
+                if (!dataByDate[activity.date]) {
+                    dataByDate[activity.date] = { workouts: [], calories: 0 };
+                }
+                dataByDate[activity.date].workouts.push(activity);
+            });
+
+            meals.forEach(meal => {
+                if (!dataByDate[meal.date]) {
+                    dataByDate[meal.date] = { workouts: [], calories: 0 };
+                }
+                dataByDate[meal.date].calories += parseInt(meal.calories);
+            });
+
+            // Display data in a simple list format
+            Object.keys(dataByDate).forEach(date => {
+                const dayDiv = document.createElement('div');
+                dayDiv.classList.add('calendar-day');
+                dayDiv.innerHTML = `
+                    <h3>${date}</h3>
+                    <p><strong>Workouts:</strong> ${dataByDate[date].workouts.length} sessions</p>
+                    <p><strong>Calories:</strong> ${dataByDate[date].calories} kcal</p>
+                `;
+                dayDiv.addEventListener('click', () => openModal(date, dataByDate[date]));
+                calendarGrid.appendChild(dayDiv);
+            });
+
+            function openModal(date, data) {
+                modal.style.display = 'block';
+                modalDate.textContent = date;
+                modalWorkouts.innerHTML = data.workouts.length ? data.workouts.map(workout => `<li>${workout.exercise} - ${workout.duration} min</li>`).join('') : '<li>No workouts</li>';
+                modalCalories.textContent = `${data.calories} kcal`;
+
+                // Set up Clear button
+                clearDayBtn.onclick = function() {
+                    clearDayData(date);
+                };
+            }
+
+            function clearDayData(date) {
+                const updatedActivities = activities.filter(activity => activity.date !== date);
+                const updatedMeals = meals.filter(meal => meal.date !== date);
+
+                localStorage.setItem('activities', JSON.stringify(updatedActivities));
+                localStorage.setItem('meals', JSON.stringify(updatedMeals));
+
+                modal.style.display = 'none';
+                location.reload(); // Refresh to update calendar
+            }
+
+            closeModal.onclick = () => modal.style.display = 'none';
+            window.onclick = (event) => { if (event.target === modal) modal.style.display = 'none'; };
+        });
+    </script>
+</body>
+</html>
