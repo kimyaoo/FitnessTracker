@@ -1,37 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Character encoding set to UTF-8 for international support -->
     <meta charset="UTF-8">
+    <!-- Viewport meta tag to ensure responsive design on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Title of the page displayed in the browser tab -->
     <title>Fitness Calendar</title>
+    
+    <!-- Link to external CSS file for styling the page -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Main header of the page, contains the title -->
     <header>
         <h1>Fitness Calendar</h1>
     </header>
 
+    <!-- Section for displaying the calendar grid and summary -->
     <section class="calendar">
         <h2>Workout & Diet Summary</h2>
+        <!-- This div will contain the dynamically generated calendar grid -->
         <div id="calendar-grid"></div>
+        
+        <!-- Link to navigate back to the main fitness tracker page -->
         <a href="index.html" class="back-btn">Back to Tracker</a>
     </section>
 
-    <!-- Modal for Viewing & Editing Entries -->
+    <!-- Modal (pop-up) for viewing and editing entries for a specific day -->
     <div id="modal" class="modal">
         <div class="modal-content">
+            <!-- Close button for closing the modal -->
             <span class="close">&times;</span>
+            <!-- Display the selected date in the modal -->
             <h2 id="modal-date"></h2>
+            <!-- Display the list of workouts on the selected date -->
             <h3>Workouts</h3>
             <ul id="modal-workouts"></ul>
+            <!-- Display the total calories consumed on the selected date -->
             <h3>Calories</h3>
             <p id="modal-calories"></p>
+            <!-- Button to clear all data for this day -->
             <button id="clear-day">Clear All Data for This Day</button>
         </div>
     </div>
 
     <script>
+        // This event runs once the entire HTML document is fully loaded
         document.addEventListener('DOMContentLoaded', () => {
+            // DOM references for various elements in the page
             const calendarGrid = document.getElementById('calendar-grid');
             const modal = document.getElementById('modal');
             const modalDate = document.getElementById('modal-date');
@@ -40,11 +58,14 @@
             const closeModal = document.querySelector('.close');
             const clearDayBtn = document.getElementById('clear-day');
 
+            // Retrieve activities and meals from localStorage (or use an empty array if none exist)
             const activities = JSON.parse(localStorage.getItem('activities')) || [];
             const meals = JSON.parse(localStorage.getItem('meals')) || [];
+            
+            // Initialize an empty object to store workout and calorie data by date
             const dataByDate = {};
 
-            // Organize activities and meals by date
+            // Organize activities by date and add them to the dataByDate object
             activities.forEach(activity => {
                 if (!dataByDate[activity.date]) {
                     dataByDate[activity.date] = { workouts: [], calories: 0 };
@@ -52,51 +73,65 @@
                 dataByDate[activity.date].workouts.push(activity);
             });
 
+            // Organize meals by date and add calorie data to dataByDate object
             meals.forEach(meal => {
                 if (!dataByDate[meal.date]) {
                     dataByDate[meal.date] = { workouts: [], calories: 0 };
                 }
-                dataByDate[meal.date].calories += parseInt(meal.calories);
+                dataByDate[meal.date].calories += parseInt(meal.calories); // Accumulate calories for the day
             });
 
-            // Display data in a simple list format
+            // Iterate over the organized data and create calendar days dynamically
             Object.keys(dataByDate).forEach(date => {
                 const dayDiv = document.createElement('div');
-                dayDiv.classList.add('calendar-day');
+                dayDiv.classList.add('calendar-day'); // Add a class for styling
                 dayDiv.innerHTML = `
                     <h3>${date}</h3>
                     <p><strong>Workouts:</strong> ${dataByDate[date].workouts.length} sessions</p>
                     <p><strong>Calories:</strong> ${dataByDate[date].calories} kcal</p>
                 `;
+                // Add an event listener to open the modal when a day is clicked
                 dayDiv.addEventListener('click', () => openModal(date, dataByDate[date]));
+                // Append the dayDiv to the calendar grid on the page
                 calendarGrid.appendChild(dayDiv);
             });
 
+            // Function to open the modal and display the data for the selected date
             function openModal(date, data) {
-                modal.style.display = 'block';
-                modalDate.textContent = date;
-                modalWorkouts.innerHTML = data.workouts.length ? data.workouts.map(workout => `<li>${workout.exercise} - ${workout.duration} min</li>`).join('') : '<li>No workouts</li>';
-                modalCalories.textContent = `${data.calories} kcal`;
+                modal.style.display = 'block'; // Show the modal
+                modalDate.textContent = date; // Set the modal header to the selected date
+                modalWorkouts.innerHTML = data.workouts.length 
+                    ? data.workouts.map(workout => `<li>${workout.exercise} - ${workout.duration} min</li>`).join('') 
+                    : '<li>No workouts</li>'; // Display workouts or a message if there are none
+                modalCalories.textContent = `${data.calories} kcal`; // Display total calories for the day
 
-                // Set up Clear button
+                // Set up the "Clear All Data for This Day" button
                 clearDayBtn.onclick = function() {
-                    clearDayData(date);
+                    clearDayData(date); // Clear the data for the selected day
                 };
             }
 
+            // Function to clear all data for a selected day (both workouts and meals)
             function clearDayData(date) {
+                // Filter out activities and meals for the selected date
                 const updatedActivities = activities.filter(activity => activity.date !== date);
                 const updatedMeals = meals.filter(meal => meal.date !== date);
 
+                // Save the updated data back to localStorage
                 localStorage.setItem('activities', JSON.stringify(updatedActivities));
                 localStorage.setItem('meals', JSON.stringify(updatedMeals));
 
-                modal.style.display = 'none';
-                location.reload(); // Refresh to update calendar
+                modal.style.display = 'none'; // Close the modal
+                location.reload(); // Reload the page to update the calendar grid
             }
 
+            // Close the modal when the "close" button is clicked
             closeModal.onclick = () => modal.style.display = 'none';
-            window.onclick = (event) => { if (event.target === modal) modal.style.display = 'none'; };
+
+            // Close the modal if the user clicks outside the modal
+            window.onclick = (event) => { 
+                if (event.target === modal) modal.style.display = 'none'; 
+            };
         });
     </script>
 </body>

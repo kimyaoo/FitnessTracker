@@ -1,77 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Character encoding set to UTF-8 for handling special characters -->
     <meta charset="UTF-8">
+    <!-- Viewport meta tag to ensure the page is responsive on all devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Title of the page displayed in the browser tab -->
     <title>Diet Tracker</title>
+    
+    <!-- Link to external CSS for styling the page -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Header section of the page -->
     <header>
         <h1>Diet Tracker</h1>
-    </header>
-
-    <section class="diet-tracker">
-        <h2>Log Your Meals</h2>
-        <form id="diet-form">
-            <label for="meal">Meal:</label>
-            <input type="text" id="meal" placeholder="e.g., Chicken Salad" required>
-
-            <label for="calories">Calories:</label>
-            <input type="number" id="calories" placeholder="e.g., 400" required>
-
-            <button type="submit">Add Meal</button>
-        </form>
-
-        <h3>Meal History</h3>
-        <ul id="meal-history"></ul>
-
-        <h3>Total Calories for Today: <span id="total-calories">0</span></h3>
-
-        <a href="index.html" class="back-btn">Back to Tracker</a>
-    </section>
-
-    <script>
-        document.getElementById('diet-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const meal = document.getElementById('meal').value;
-            const calories = parseInt(document.getElementById('calories').value);
-            const date = new Date().toLocaleDateString();
-
-            const mealEntry = { meal, calories, date };
-
-            const meals = JSON.parse(localStorage.getItem('meals')) || [];
-            meals.push(mealEntry);
-
-            localStorage.setItem('meals', JSON.stringify(meals));
-
-            document.getElementById('diet-form').reset();
-            displayMeals();
-        });
-
-        function displayMeals() {
-            const meals = JSON.parse(localStorage.getItem('meals')) || [];
-            const today = new Date().toLocaleDateString();
-            const mealList = document.getElementById('meal-history');
-            const totalCalories = document.getElementById('total-calories');
-            let dailyCalories = 0;
-
-            mealList.innerHTML = '';
-
-            meals.forEach(meal => {
-                if (meal.date === today) {
-                    const li = document.createElement('li');
-                    li.textContent = `${meal.meal} - ${meal.calories} calories`;
-                    mealList.appendChild(li);
-                    dailyCalories += meal.calories;
-                }
-            });
-
-            totalCalories.textContent = dailyCalories;
-        }
-
-        window.addEventListener('load', displayMeals);
-    </script>
-</body>
-</html>
+  

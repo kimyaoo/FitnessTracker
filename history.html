@@ -1,37 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Character encoding set to UTF-8 for handling special characters -->
     <meta charset="UTF-8">
+    
+    <!-- Viewport meta tag for responsiveness on various devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Title of the page displayed in the browser tab -->
     <title>Activity History</title>
+    
+    <!-- Link to external CSS file for styling -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Header section with the main title of the page -->
     <header>
         <h1>Activity History</h1>
     </header>
 
+    <!-- Main section for displaying the logged activities -->
     <section class="history">
         <h2>Your Logged Activities</h2>
+        
+        <!-- Unordered list that will hold the activity history -->
         <ul id="activity-history"></ul>
+        
+        <!-- Link to navigate back to the main tracker page -->
         <a href="index.html" class="back-btn">Back to Tracker</a>
     </section>
 
     <script>
-        // Get activities from localStorage
+        // Retrieve activities from localStorage
         const activities = JSON.parse(localStorage.getItem('activities')) || [];
 
-        // Reference to the activity list
+        // Reference to the 'activity-history' UL element in the DOM
         const activityList = document.getElementById('activity-history');
 
-        // Display activities
+        // Check if there are any logged activities
         if (activities.length > 0) {
+            // Loop through each activity and create a list item (LI) for each
             activities.forEach(activity => {
+                // Create a new list item
                 const li = document.createElement('li');
+                
+                // Set the content of the list item to display the activity details
                 li.textContent = `${activity.exercise} - ${activity.duration} minutes on ${activity.date}`;
+                
+                // Append the list item to the activity list
                 activityList.appendChild(li);
             });
         } else {
+            // If no activities are logged, display a message indicating so
             activityList.innerHTML = '<li>No activities logged yet.</li>';
         }
     </script>

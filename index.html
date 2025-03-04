@@ -1,65 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta tag specifying character encoding for the page (UTF-8) -->
     <meta charset="UTF-8">
+    
+    <!-- Meta tag for responsive design, ensuring the page adapts to different screen sizes -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Page title displayed on the browser tab -->
     <title>Fitness Tracker</title>
+    
+    <!-- Link to an external CSS file for styling the page -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Header section with the main title of the page -->
     <header>
         <h1>Fitness Tracker</h1>
     </header>
 
+    <!-- Main section for tracking fitness activities -->
     <section class="tracker">
+        <!-- Heading for the activity tracker form -->
         <h2>Track Your Progress</h2>
+        
+        <!-- Form for submitting a new activity -->
         <form id="activity-form">
+            
+            <!-- Label and input field for the exercise name -->
             <label for="exercise">Exercise:</label>
             <input type="text" id="exercise" placeholder="e.g., Running" required>
             
+            <!-- Label and input field for the duration of the exercise -->
             <label for="duration">Duration (minutes):</label>
             <input type="number" id="duration" placeholder="e.g., 30" required>
             
+            <!-- Button to submit the form and add the activity -->
             <button type="submit">Add Activity</button>
         </form>
 
+        <!-- Link to navigate to the activity history page -->
         <a href="history.html" class="history-btn">View Activity History</a>
+        
+        <!-- Link to navigate to the diet tracker page -->
+        <a href="diet.html" class="diet-btn">Track Your Diet</a>
+
+        <!-- Link to navigate to the calendar page -->
+        <a href="calendar.html" class="calendar-btn">View Calendar</a>
     </section>
 
     <script>
+        // Event listener for the form submission
         document.getElementById('activity-form').addEventListener('submit', function(e) {
-            e.preventDefault();
+            e.preventDefault(); // Prevent form submission to avoid page reload
 
-            // Get values
+            // Get the exercise and duration values from the input fields
             const exercise = document.getElementById('exercise').value;
             const duration = document.getElementById('duration').value;
 
-            // Create activity object
+            // Create an activity object with the input data and the current date
             const activity = {
-                exercise,
-                duration,
-                date: new Date().toLocaleDateString()
+                exercise, // Store the exercise type (e.g., Running)
+                duration, // Store the duration of the exercise
+                date: new Date().toLocaleDateString() // Get the current date in the locale's format
             };
 
-            // Get existing activities from localStorage or create an empty array
+            // Get existing activities from localStorage, or initialize an empty array if none exist
             const activities = JSON.parse(localStorage.getItem('activities')) || [];
 
-            // Add new activity
+            // Add the new activity to the activities array
             activities.push(activity);
 
-            // Save back to localStorage
+            // Save the updated activities array back into localStorage
             localStorage.setItem('activities', JSON.stringify(activities));
 
-            // Clear form
+            // Clear the form fields after submission
             document.getElementById('activity-form').reset();
 
+            // Show a confirmation alert to the user
             alert('Activity added!');
         });
     </script>
 </body>
 </html>
-
-
-<a href="diet.html" class="diet-btn">Track Your Diet</a>
-
-<a href="calendar.html" class="calendar-btn">View Calendar</a>
